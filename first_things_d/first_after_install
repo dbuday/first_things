@@ -1,0 +1,332 @@
+#!/bin/bash
+#
+#
+###### Install script #########
+#  This script updates the system and installs additional software
+#
+#      It also disables crash and error messages
+#########################
+#
+# Author: Davor Buday
+# Email: davor.buday@gmail.com
+#
+#############################
+
+#####################################
+###### INSTRUCTIONS (HOW TO USE) #########
+#
+#   cd first_after_d
+#   chmod a+x first_after_install
+#   ./first_after_install
+#
+####################################
+#####################################
+
+
+
+####################################################
+###########  CUSTOMIZE   ##############################
+
+####  Grub background image  ####
+#	Uncomment image you want to use
+
+grub_backgound="grub_ubupatt.png"
+#grub_backgound="grub_anime.png"
+#grub_backgound="grub_sweat.png"
+##########################
+
+#### Installed packages  ####
+#	You can add or remove packages inside the quotes
+
+#Ubuntu
+ubuntu_packages="chromium-browser compizconfig-settings-manager unity-tweak-tool synaptic mypaint gdebi gimp vlc cheese clementine openshot stellarium pavucontrol audacity asunder bleachbit teeworlds supertuxkart gprename hardinfo wine playonlinux mtpfs mtp-tools lxde"
+
+#Lubuntu
+lubuntu_packages="libreoffice mypaint gdebi gimp vlc cheese clementine openshot stellarium pavucontrol audacity asunder bleachbit chromium-browser thunderbird teeworlds supertuxkart light-themes gprename wine playonlinux mtpfs mtp-tools  e17"
+######################
+
+###################################################
+###################################################
+
+
+
+####### FUNCTIONS ############
+
+
+welcome() {
+clear
+echo "$(tput setaf 4)$(tput bold)GREETINGS TO YOU, EARTHLING!$(tput sgr0)"
+echo " "
+echo "$(tput setaf 4)You've just successfully installed Ubuntu.$(tput sgr0)"
+echo "$(tput setaf 4)	Well done, Earthling!$(tput sgr0)"
+echo " "
+echo " "
+echo "	I must remind you: YOU NEED ACTIVE INTERNET CONNECTION."
+echo " "
+echo "	Got it?  Then we're just fine."
+echo " "
+echo " "
+echo " "
+echo " "
+echo " One more small, but important hint: When you need to enter your password in Terminal, nothing will show while you type. That is normal - insert your password carefully and press Enter."
+echo " "
+echo " OK ? "
+echo " "
+echo " "
+echo " "
+echo "$(tput setaf 4) Just press any key to continue... $(tput sgr0)"
+read -n 1 -s
+clear
+echo " "
+echo " "
+echo "One more question before we start: "
+echo "During the install process, you have been asked to decide if you want to install additional software or not. "
+echo " "
+echo " "
+echo " "
+echo "	 $(tput bold)Did you install it?$(tput sgr0)"
+echo " "
+echo " "
+while true; do
+		read -p " Choose $(tput bold)Y$(tput sgr0) for Yes or $(tput bold)N$(tput sgr0) for No " choice
+		case $choice in
+			[yYdD]*) unset choice
+					extras_in=1
+					echo " "
+					echo " So you did... OK. "
+					echo " "
+					echo "Press a key..."
+					read -n 1 -s
+					break
+					;;
+			[nN]*) 	unset choice
+					echo " "
+					echo " So you didn't... OK. "
+					extras_in=0
+					echo " "
+					echo "Press a key..."
+					read -n 1 -s
+					break
+					;;
+				* ) echo -e "I need an answer - y (yes) or n (no) ! "
+		esac
+	done
+}
+
+
+update() {
+clear
+echo "This script will do updates and additional software installation for you. "
+echo "Let's get started!"
+echo " "
+echo " "
+echo "$(tput bold)First thing: system update.$(tput sgr0)"
+echo " "
+echo "	Here are 4 steps: update, upgrade, dist-upgrade and autoremove."
+echo " "
+echo " "
+echo "		You have two choices: "
+echo "	1. Confirm all of the next 4 steps."
+echo "		(This will let you decide if you want to go through each step or skip some of them)"
+echo "	2. Let all 4 steps proceed automatically."
+echo "		(If you choose this option, just take your drink and relax.)"
+echo " "
+echo "$(tput bold) 	Do you want to confirm every step?$(tput sgr0)"
+echo " "
+echo "$(tput bold)1$(tput sgr0)................................Yes, I want to confirm every step. "
+echo "$(tput bold)2$(tput sgr0)................................No, do your thing. "
+echo " "
+make_update
+}
+
+
+make_update() {
+while true; do
+		read -p "$(tput setaf 1)$(tput bold) Your selection ( 1 or 2 ) ? $(tput sgr0)" choice
+		case $choice in
+			1) 		unset choice
+					echo "$(tput setaf 4) OK, you will confirm.  Let's go! $(tput sgr0)"
+					echo " "
+					echo "Step 1:  Sync repositories information...."
+					sudo apt-get update
+					echo " "
+					echo "Step 2:  Updating existing software...."
+					echo "(This could take some time, so just sit back and relax.)"
+					sudo apt-get upgrade
+					echo " "
+					echo "Step 3:  Updating kernel, if there is new one available."
+					sudo apt-get dist-upgrade
+					echo " "
+					echo "Step 4:  Removing obsolete packages."
+					sudo apt-get autoremove
+					echo " "
+					break
+					;;
+			2) 		unset choice
+					echo "$(tput setaf 4) OK, you will let it be.  Let's go then! $(tput sgr0)"
+					echo " "
+					echo "Step 1:  Sync repositories information...."
+					sudo apt-get update -y
+					echo " "
+					echo "Step 2:  Updating existing software...."
+					echo "(This could take some time, so just sit back and relax.)"
+					sudo apt-get upgrade -y
+					echo " "
+					echo "Step 3:  Updating kernel, if there is new one available."
+					sudo apt-get dist-upgrade -y
+					echo " "
+					echo "Step 4:  Removing obsolete packages."
+					sudo apt-get autoremove -y
+					echo " "
+					break
+					;;
+				* ) echo -e "I need correct answer - 1 or 2 ! "
+		esac
+	done
+}
+
+
+distro_choice() {
+echo " "
+echo " 		Updating is done."
+echo " 		It's time to install additional software."
+echo " "
+echo " 		There are two software bundles ready for you: "
+echo "	1. Ubuntu"
+echo "		(Installs additional software for Ubuntu release)"
+echo "	2. Lubuntu"
+echo "		(Installs additional software for Lubuntu release)"
+echo " "
+echo "$(tput bold) 	Your distribution is ...$(tput sgr0)"
+echo " "
+echo "$(tput bold)1$(tput sgr0)................................   Ubuntu. "
+echo "$(tput bold)2$(tput sgr0)................................   Lubuntu. "
+echo " "
+make_additional_installations
+}
+
+
+make_additional_installations() {
+echo " "
+echo " "
+echo " "
+while true; do
+		read -p "$(tput setaf 1)$(tput bold) Your selection ( 1 or 2 ) ? $(tput sgr0)" choice
+		case $choice in
+			1) 		unset choice
+					echo " "
+					echo " "
+					echo " "
+					echo "$(tput setaf 4) OK, it is Ubuntu then..  Let's go! $(tput sgr0)"
+					echo " "
+					echo "This will take some time...."
+					echo "	(It depends on your hardware and internet connection)"
+					echo " "
+
+						if (( $extras_in == 0 )); then
+							echo " First that additional software you skipped during installation process."
+							echo " If asked: confirm with Y.  Tab and Enter for possible menus."
+							echo "Press a key..."
+							read -n 1 -s
+							sudo apt-get install ubuntu-restricted-extras
+							echo " Done that part."
+						fi
+					echo " "
+					echo " "
+					echo " $(tput bold)Now it's time for a bundle of programs you must have.$(tput sgr0)"
+					echo "	It will take about half an hour. If asked: confirm with Y. "
+					echo " "
+					echo "These packages will be installed: " $ubuntu_packages
+					echo " "
+					echo " "
+					echo "Press a key..."
+					read -n 1 -s
+					echo " "
+					sudo apt-get install $ubuntu_packages
+					echo " "
+					echo "$(tput bold) Additional software installation is done !$(tput sgr0)"
+					sudo sed -i 's/enabled=1/enabled=0/g' /etc/default/apport
+					sudo cp $grub_backgound /boot/grub/$grub_backgound
+					sudo update-grub
+					break
+					;;
+			2) 		unset choice
+					echo " "
+					echo " "
+					echo " "
+					echo "$(tput setaf 4) OK, it is Lubuntu then..  Let's go! $(tput sgr0)"
+					echo " "
+					echo "This will take some time...."
+					echo "	(It depends on your hardware and internet connection)"
+					echo " "
+
+						if (( $extras_in == 0 )); then
+							echo " First that additional software you skipped during installation process."
+							echo " If asked: confirm with Y.  Tab and Enter for possible menus."
+							echo "Press a key..."
+							read -n 1 -s
+							sudo apt-get install lubuntu-restricted-extras
+							echo " Done that part."
+						fi
+					echo " "
+					echo " "
+					echo " $(tput bold)Now it's time for a bundle of programs you must have.$(tput sgr0)"
+					echo "	It will take about half an hour. If asked: confirm with Y. "
+					echo " "
+					echo "These packages will be installed:  " $lubuntu_packages
+					echo " "
+					echo " "
+					echo "Press a key..."
+					read -n 1 -s
+					echo " "
+					sudo apt-get install $lubuntu_packages
+					echo " "
+					echo "$(tput bold) Additional software installation is done !$(tput sgr0)"
+					sudo sed -i 's/enabled=1/enabled=0/g' /etc/default/apport
+					sudo cp $grub_backgound /boot/grub/$grub_backgound
+					sudo update-grub
+					sudo cp lubuntu-logo-orange.png /usr/share/lxde/images/lubuntu-logo-orange.png
+					break
+					;;
+				* ) echo -e "I need correct answer - 1 or 2 ! "
+		esac
+	done
+}
+
+
+end() {
+echo " "
+echo " "
+echo " "
+echo "$(tput bold)$(tput setaf 1)		THAT'S ALL!$(tput sgr0)"
+echo " "
+echo " "
+unset extras_in
+unset grub_backgound
+unset ubuntu_packages
+unset lubuntu_packages
+echo "$(tput bold)I will restart the system now.$(tput sgr0)"
+echo " "
+echo "$(tput setaf 4) Just press any key when ready... $(tput sgr0)"
+read -n 1 -s
+sudo shutdown -r now
+exit 0
+}
+
+################################"
+
+
+###################################
+######## CODE ######################
+##################################
+
+welcome
+update
+distro_choice
+end
+
+###################################
+#
+#     END
+#
+###################################
