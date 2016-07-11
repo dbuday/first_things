@@ -10,7 +10,7 @@ USAGE:
 
  2. Start Terminal (Ctrl+Alt+t)
 
- 3. Copy following commands, ONE LINE AT A TIME, and paste them into Terminal. Confirm with Enter.
+ 3. Copy following commands and paste them into Terminal. Confirm with Enter.
 
 cd first_after_d
 chmod a+x first_after_install
