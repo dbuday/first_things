@@ -148,8 +148,8 @@ echo "		(If you choose this option, just take your drink and relax.)"
 echo " "
 echo "$(tput bold) 	Do you want to confirm every step?$(tput sgr0)"
 echo " "
-echo "$(tput bold)1$(tput sgr0)................................Yes, I want to confirm every step. "
-echo "$(tput bold)2$(tput sgr0)................................No, do your thing. "
+echo "   $(tput bold)1$(tput sgr0) ................................ Yes, I want to confirm every step. "
+echo "   $(tput bold)2$(tput sgr0) ................................ No, do your thing. "
 echo " "
 make_update
 }
@@ -172,6 +172,7 @@ while true; do
 					echo " "
 					echo "$(tput bold)Step 1:  Sync repositories information...$(tput sgr0)"
 					echo "		Command is: apt-get update  -  do you want to execute it? "
+					echo " "
 					while true; do
 						read -p " Choose $(tput bold)Y$(tput sgr0) for Yes or $(tput bold)N$(tput sgr0) for No " choice
 						case $choice in
@@ -179,6 +180,7 @@ while true; do
 									echo " "
 									echo " Ok.  Executing... "
 									echo "  "
+									sleep 1
 									sudo apt-get update
 									break
 									;;
@@ -195,6 +197,7 @@ while true; do
 					echo " "
 					echo "$(tput bold)Step 2:  Updating existing software...$(tput sgr0)"
 					echo "		Command is: apt-get upgrade  -  do you want to execute it? "
+					echo " "
 					while true; do
 						read -p " Choose $(tput bold)Y$(tput sgr0) for Yes or $(tput bold)N$(tput sgr0) for No " choice
 						case $choice in
@@ -203,8 +206,8 @@ while true; do
 									echo " Ok.  Executing... "
 									echo "  "
 									echo "(This could take some time, so just sit back and relax.)"
-									sleep 1
 									echo " "
+									sleep 2
 									sudo apt-get upgrade
 									break
 									;;
@@ -221,6 +224,7 @@ while true; do
 					echo " "
 					echo "$(tput bold)Step 3:  Updating kernel, if there is new one available.$(tput sgr0)"
 					echo "		Command is: apt-get dist-upgrade  -  do you want to execute it? "
+					echo " "
 					while true; do
 						read -p " Choose $(tput bold)Y$(tput sgr0) for Yes or $(tput bold)N$(tput sgr0) for No " choice
 						case $choice in
@@ -228,6 +232,7 @@ while true; do
 									echo " "
 									echo " Ok.  Executing... "
 									echo "  "
+									sleep 1
 									sudo apt-get dist-upgrade
 									break
 									;;
@@ -245,6 +250,7 @@ while true; do
 					echo " "
 					echo "$(tput bold)Step 4:  Removing obsolete packages.$(tput sgr0)"
 					echo "		Command is: apt-get autoremove  -  do you want to execute it? "
+					echo " "
 					while true; do
 						read -p " Choose $(tput bold)Y$(tput sgr0) for Yes or $(tput bold)N$(tput sgr0) for No " choice
 						case $choice in
@@ -252,6 +258,7 @@ while true; do
 									echo " "
 									echo " Ok.  Executing... "
 									echo "  "
+									sleep 1
 									sudo apt-get autoremove
 									break
 									;;
@@ -271,9 +278,9 @@ while true; do
 			2) 		unset choice
 					echo " "
 					echo "$(tput setaf 4) OK, you will let it be.  Let's go then! $(tput sgr0)"
+					echo " "
+					echo " "
 					sleep 1
-					echo " "
-					echo " "
 					echo "$(tput bold)Step 1:  Sync repositories information...$(tput sgr0)"
 					echo " "
 					sudo apt-get update -y
@@ -339,10 +346,12 @@ while true; do
 					echo "This will take some time...."
 					echo "	(It depends on your hardware and internet connection)"
 					echo " "
+					echo " "
 
 						if (( $extras_in == 0 )); then
 							echo " First that additional software you skipped during installation process."
-							echo " If asked: confirm with Y.  Tab and Enter for possible menus."
+							echo "     If asked:  confirm with Y."
+							echo "     Tab and Enter for possible menus."
 							echo " "
 							echo "Press a key..."
 							read -n 1 -s
@@ -355,7 +364,7 @@ while true; do
 					echo " "
 					echo " $(tput bold)Now it's time for a bundle of programs you must have.$(tput sgr0)"
 					echo "	It will take about half an hour. "
-					echo "$(tput bold)		 If asked: confirm with Y.$(tput sgr0) "
+					echo "		 If asked: confirm with$(tput bold) Y.$(tput sgr0) "
 					echo " "
 					echo "$(tput setaf 4)These packages will be installed:$(tput sgr0)   " $ubuntu_packages
 					echo " "
@@ -387,7 +396,8 @@ while true; do
 
 						if (( $extras_in == 0 )); then
 							echo " First that additional software you skipped during installation process."
-							echo " If asked: confirm with Y.  Tab and Enter for possible menus."
+							echo "     If asked:  confirm with Y."
+							echo "     Tab and Enter for possible menus."
 							echo " "
 							echo "Press a key..."
 							read -n 1 -s
@@ -400,7 +410,7 @@ while true; do
 					echo " "
 					echo " $(tput bold)Now it's time for a bundle of programs you must have.$(tput sgr0)"
 					echo "	It will take about half an hour. "
-					echo "$(tput bold)		 If asked: confirm with Y.$(tput sgr0) "
+					echo "		 If asked: confirm with$(tput bold) Y.$(tput sgr0) "
 					echo " "
 					echo "$(tput setaf 4)These packages will be installed:$(tput sgr0)   " $lubuntu_packages
 					echo " "
@@ -438,9 +448,9 @@ unset extras_in
 unset grub_backgound
 unset ubuntu_packages
 unset lubuntu_packages
-echo "$(tput bold)I will restart the system now.$(tput sgr0)"
+echo "$(tput bold)    I will restart the system now.$(tput sgr0)"
 echo " "
-echo "$(tput setaf 4) Just press any key when ready... $(tput sgr0)"
+echo "$(tput setaf 4)    Just press any key when ready... $(tput sgr0)"
 read -n 1 -s
 sudo shutdown -r now
 exit 0
