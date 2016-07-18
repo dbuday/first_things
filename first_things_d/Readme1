@@ -7,6 +7,10 @@
 This script will update your system and install additional software.
 It will also turn error messages off (good idea, believe me).
 
+DO NOT FEAR:
+Script will gently guide you through the process.
+
+
 
 
 	USAGE:
@@ -32,9 +36,11 @@ Script will do everything else.
 
 
 
+
+
 	CUSTOMIZE
 
-At the beginning of the script, from line 27 to line 49, you can find three variables (grub_backgound, ubuntu_packages and lubuntu_packages) you can change.
+At the beginning of the script, from line 35 to line 57, you can find three variables (grub_backgound, ubuntu_packages and lubuntu_packages) you can change.
 	Be sure to know what you're doing.
 
 
@@ -42,7 +48,8 @@ At the beginning of the script, from line 27 to line 49, you can find three vari
 1.   You can change grub background image by uncommenting it within the script.
 
 Inside this folder are 3 possible grub background image choices: grub_anime.png, grub_sweat.png and grub_ubupatt.png.
-	grub_ubupatt.png is current choice.
+
+	grub_ubupatt.png is current (default) choice!
 
 If you want to change it, just uncomment (remove #) desired image, like this:
 #grub_backgound="grub_ubupatt.png"
